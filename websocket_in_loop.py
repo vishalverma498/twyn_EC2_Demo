@@ -1,37 +1,59 @@
 import asyncio
 import websockets
 import json
-import datetime
 import random
 
-async def handler(websocket, path):
+# Initialize arm rotation and direction as global variables
+arm_rotation = 0.1
+direction = 1
+
+async def arm_rotation_updater():
+    global arm_rotation
+    global direction
 
     while True:
-        # create a JSON object
-        data = {
-            "ObjctId": "Conveyer ",
-            "Health": random.uniform(13.5, 53.5),
-            "OEE": random.uniform(122.5, 522.5),
-            "Temperature": [
-                random.uniform(1.54, 3.5), random.uniform(1.53, 5.53),random.uniform(1.5, 5.5)
-            ],
-            "Vibration": random.uniform(121.5, 215.5),
-            "Pressure": random.uniform(221.5, 335.5),
-            "Power": random.uniform(441.5, 555.5),
-            "Production": random.uniform(661.5, 775.5)
-        }
-        # "time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        # "message": "Hello, Client!"
+        # Update arm rotation value
+        arm_rotation += 0.1 * direction
 
-        # convert the JSON object to a string
+        # Change direction when reaching 180 or 0.1
+        if arm_rotation >= 180:
+            direction = -1
+        elif arm_rotation <= 0.1:
+            direction = 1
+
+        # Wait for 1 second before updating again
+        await asyncio.sleep(1)
+
+async def handler(websocket, path):
+    while True:
+        # Create a JSON object
+        data = {
+            "armMachine": [
+                {
+                    "temp": random.uniform(1.54, 3.5),
+                    "vibration": random.uniform(1.53, 5.53),
+                    "armRotation": round(arm_rotation, 2),  # Round to 2 decimal places
+                    "Power": random.uniform(441.5, 555.5)
+                }
+            ],
+            "machine_status": 0,
+            "show_Demo_dye_change": 1
+        }
+
+        # Convert the JSON object to a string
         json_data = json.dumps(data)
-        # send the JSON string to the client
+
+        # Send the JSON string to the client
         await websocket.send(json_data)
         print(f"> {json_data}")
-        # wait for 1 second
+
+        # Wait for a short time before sending the next update
         await asyncio.sleep(1)
 
 start_server = websockets.serve(handler, "localhost", 12345)
+
+# Create a task for the arm rotation updater
+rotation_updater_task = asyncio.get_event_loop().create_task(arm_rotation_updater())
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
