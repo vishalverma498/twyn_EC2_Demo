@@ -50,7 +50,7 @@ async def handler(websocket, path):
         # Wait for a short time before sending the next update
         await asyncio.sleep(1)
 
-start_server = websockets.serve(handler, "localhost", 12345)
+start_server = websockets.serve(handler, "3.111.214.73", 12345)
 
 # Create a task for the arm rotation updater
 rotation_updater_task = asyncio.get_event_loop().create_task(arm_rotation_updater())
