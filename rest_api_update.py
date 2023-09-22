@@ -99,4 +99,4 @@ def get_dye_data():
     return jsonify(data)
 
 if __name__ == '__main__':
-    app.run(host='13.233.35.226', port=12345, threaded=True)
+    app.run(host='0.0.0.0', port=12345, threaded=True)
