@@ -39,9 +39,9 @@ def get_graph30_data():
             "Efficiency": round(random.uniform(0, 100), 2),
             "Temperature": round(random.uniform(0, 500), 2),
             "Vibration": round(random.uniform(0, 100), 2),
-            "Pressure": round(random.uniform(0, 500), 2),
+            "Pressure": round(random.uniform(0, 100), 2),
             "Power": round(random.uniform(0, 150), 2),
-            "SPH": round(random.uniform(100, 500), 2),
+            "SPH": round(random.uniform(450, 650), 2),
             "PVA": f"{random.randint(0, 500)}/500"
         }
         graph30_data.append(new_data_point)
@@ -57,9 +57,9 @@ def get_graph_data():
         "Efficiency": round(random.uniform(0, 100), 2),
         "Temperature": round(random.uniform(0, 500), 2),
         "Vibration": round(random.uniform(0, 100), 2),
-        "Pressure": round(random.uniform(0, 500), 2),
+        "Pressure": round(random.uniform(0, 100), 2),
         "Power": round(random.uniform(0, 150), 2),
-        "SPH": round(random.uniform(100, 500), 2),
+        "SPH": round(random.uniform(450, 650), 2),
         "PVA": f"{random.randint(0, 500)}/500"
     }
     return jsonify(data)
