@@ -80,10 +80,14 @@ def get_graph_data():
 @app.route('/motor', methods=['GET'])
 def get_motor_data():
     data = {
-        "Motor1T": round(random.uniform(3, 8), 2),
-        "Motor2T": round(random.uniform(8, 12), 2),
-        "Motor3T": round(random.uniform(12, 15), 2),
-        "Motor4T": round(random.uniform(3, 8), 2),
+        "Motor1T": round(random.uniform(0, 250), 2),
+        "Motor2T": round(random.uniform(250, 400), 2),
+        "Motor3T": round(random.uniform(400, 500), 2),
+        "Motor4T": round(random.uniform(250, 400), 2),
+        "Motor1P": round(random.uniform(3, 8), 2),
+        "Motor2P": round(random.uniform(8, 12), 2),
+        "Motor3P": round(random.uniform(12, 15), 2),
+        "Motor4P": round(random.uniform(3, 8), 2),
         "Motor1V": round(random.uniform(0, 50), 2),
         "Motor2V": round(random.uniform(50, 75), 2),
         "Motor3V": round(random.uniform(75, 100), 2),
